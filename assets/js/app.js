@@ -1,35 +1,47 @@
-/**
- * Created by Edward Lance Lorilla on 7/4/2018.
- */
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
-window.Vue = require('vue');
+
+window.Vue = require('vue')
+import NProgress from 'nprogress';
+import ElementUI from 'element-ui';;
 import Auth from './components/Plugin/Auth'
 import VueRouter from 'vue-router'
+
+Vue.use(ElementUI);
 Vue.use(VueRouter)
 Vue.use(Auth);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-// Vue.component('preloader', require('./components/Preloader.vue'));
+Vue.component('pre-loader', require('./components/Utilities/Preloader.vue'));
 const router = new VueRouter({
     mode:'history',
     base: __dirname,
     routes:[
-        {path:'/', component: require('./components/Auth/Login.vue') , name:'Login'},
+        {path:'/', component:  require('./components/Auth/Login.vue') , name:'Login'},
         {path:'/dashboard', component: require('./components/Layout/Wrapper.vue') , name:'Dashboard'},
     ]
 });
+router.beforeResolve((to, from, next) => {
+    if (to.path) {
+        NProgress.start()
+    }
+    next()
+});
+
+router.afterEach(() => {
+    NProgress.done()
+});
 const app = new Vue({
     router,
+    data(){
+        return {
+            store: {
+                state: {
+                    loading: false
+                },
+                mutations:{},
+                dispatch(mutation, data = {}){
+                    this.mutations[mutation](this.state, data)
+                }
+            }
+        }
+    },
     render: h => h(require('./components/App.vue'))
 }).$mount('#app');
