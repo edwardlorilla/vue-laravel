@@ -1,6 +1,5 @@
-<script>
-    import Wrapper from './Layout/Wrapper.vue';
-    export default{
-        render: h => h(Wrapper)
-    }
-</script>
+<template>
+    <div>
+        <router-view/>
+    </div>
+</template>

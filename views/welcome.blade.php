@@ -17,7 +17,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}"/>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition login-page sidebar-mini">
 <div id="app">
 </div>
 <script type="text/javascript" src="{{mix('/js/app.js')}}"></script>

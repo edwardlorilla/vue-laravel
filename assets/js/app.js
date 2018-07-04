@@ -9,9 +9,11 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
-
+import Auth from './components/Plugin/Auth'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+Vue.use(Auth);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -19,8 +21,15 @@ window.Vue = require('vue');
  */
 
 // Vue.component('preloader', require('./components/Preloader.vue'));
-
-const app = new Vue({
-    el: '#app',
-    render: h => h(require('./components/App.vue'))
+const router = new VueRouter({
+    mode:'history',
+    base: __dirname,
+    routes:[
+        {path:'/', component: require('./components/Auth/Login.vue') , name:'Login'},
+        {path:'/dashboard', component: require('./components/Layout/Wrapper.vue') , name:'Dashboard'},
+    ]
 });
+const app = new Vue({
+    router,
+    render: h => h(require('./components/App.vue'))
+}).$mount('#app');
