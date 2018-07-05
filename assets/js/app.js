@@ -12,10 +12,9 @@ Vue.use(Auth);
 Vue.component('pre-loader', require('./components/Utilities/Preloader.vue'));
 const router = new VueRouter({
     mode:'history',
-    base: __dirname,
+    base: '/dashboard',
     routes:[
-        {path:'/', component:  require('./components/Auth/Login.vue') , name:'Login'},
-        {path:'/dashboard', component: require('./components/Layout/Wrapper.vue') , name:'Dashboard'},
+        {path:'/', component: require('./components/Layout/Wrapper.vue') , name:'Dashboard'},
     ]
 });
 router.beforeResolve((to, from, next) => {
